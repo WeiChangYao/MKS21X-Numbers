@@ -1,16 +1,32 @@
 public class RealNumber{
-  private double realN;
-  public RealNumber(double n){
-    realN = n;
+  private double value;
+
+  public RealNumber(double v){
+    value = v;
   }
-  public double getNum(){
-    return realN;
+
+  public double add(RealNumber other){
+     return this.getValue() + other.getValue();
   }
+
+  public double multiply(RealNumber other){
+    return this.getValue() * other.getValue();
+  }
+
+  public double divide(RealNumber other){
+    return this.getValue() / other.getValue();
+  }
+ 
+  public double subtract(RealNumber other){
+    return this.getValue() - other.getValue();
+  }
+
+
+  public double getValue(){
+    return value;
+  }
+
   public String toString(){
-    return "";
-  }
-  //returns larger value
-  public double compareRealReal(RealNumber a, RealNumber b){
-    return 1.0;
+    return ""+value;
   }
 }

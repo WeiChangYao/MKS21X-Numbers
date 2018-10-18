@@ -11,10 +11,19 @@ public class RationalNumber extends RealNumber
     super(0.0);//this value is ignored! 
     numerator = nume;
     denominator = deno;
+    if (deno == 0){
+      numerator = 0;
+      denominator = 1;
+    }
+    if (deno < 0){
+      numerator = (nume*-1);
+      denominator = (deno*-1);
+    }
+    reduce();
   }
 
   public double getValue(){
-    return 0.0;
+    return ((double) getNumerator() / (double) getDenominator());
   }
 
   public int getNumerator(){
@@ -24,37 +33,40 @@ public class RationalNumber extends RealNumber
   public int getDenominator(){
     return denominator;
   }
-  /**
-  *@return a new RationalNumber that has the same numerator
-  *and denominator as this RationalNumber but reversed.
-  */
+
   public RationalNumber reciprocal(){
     return new RationalNumber(this.getDenominator(), this.getNumerator());
   }
-  /**
-  *@return true when the RationalNumbers have the same numerators and denominators, false otherwise.
-  */
+
   public boolean equals(RationalNumber other){
-    return false;
+    if ((this.getNumerator() == other.getNumerator()) & (this.getDenominator() == other.getDenominator())){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 
-  /**
-  *@return the value expressed as "3/4" or "8/3"
-  */
   public String toString(){
-    return "" + getNumerator() + "/" + getDenominator();
+    if (denominator == 1){
+      return "" + numerator;
+    }
+    if (numerator == 0){
+      return "" + 0;
+    }
+    else {
+      return "" + getNumerator() + "/" + getDenominator();
+    }
   }
 
-  /**Calculate the GCD of two integers.
-  *@param a the first integers
-  *@param b the second integer
-  *@return the value of the GCD
-  */
   private static int gcd(int a, int b){
-    /*use euclids method or a better one*/
-    http://sites.math.rutgers.edu/~greenfie/gs2004/euclid.html
-    return 0;
+    while(a!=0 && b!=0) {
+     int c = b;
+     b = a%b;
+     a = c;
+     }
+  return a+b; 
   }
 
   /**
@@ -63,33 +75,41 @@ public class RationalNumber extends RealNumber
   *reduced after construction.
   */
   private void reduce(){
-
+    if (numerator != 0){
+      int common = gcd(Math.abs(numerator), Math.abs(denominator));
+      denominator = denominator/common;
+      numerator = numerator/common;
+    }
   }
   /******************Operations Return a new RationalNumber!!!!****************/
   /**
   *Return a new RationalNumber that is the product of this and the other
   */
   public RationalNumber multiply(RationalNumber other){
-    return null;
+    return new RationalNumber((this.getNumerator()*other.getNumerator()),(this.getDenominator()*other.getDenominator()));
   }
 
   /**
   *Return a new RationalNumber that is the this divided by the other
   */
   public RationalNumber divide(RationalNumber other){
-    return null;
+    return new RationalNumber((this.getNumerator()*other.getDenominator()),(this.getDenominator()*other.getNumerator()));
   }
 
   /**
   *Return a new RationalNumber that is the sum of this and the other
   */
   public RationalNumber add(RationalNumber other){
-    return null;
+    int commonD = this.getDenominator()*other.getDenominator();
+    int sum = (this.getNumerator()*other.getDenominator() + other.getNumerator()*this.getDenominator());
+    return new RationalNumber (sum, commonD);
   }
   /**
   *Return a new RationalNumber that this minus the other
   */
   public RationalNumber subtract(RationalNumber other){
-    return null;
+    int commonD = this.getDenominator()*other.getDenominator();
+    int dif = (this.getNumerator()*other.getDenominator() - other.getNumerator()*this.getDenominator());
+    return new RationalNumber (dif, commonD);
   }
-}
+} 
